@@ -1,8 +1,6 @@
 # rftg-flash-cards
 
-TODO:
-
-project description
+Playing around with scala, Scaloid and Android development
 
 ## Usage
 
@@ -10,7 +8,12 @@ TODO:
 
 ## Development
 
+```
 set ANDROID_HOME
 sbt android:package
-sbt install
+(once)
+adb install target/android-bin/rftg-flash-cards-debug.apk
+(many)
+sbt android:install
+```
 
