@@ -1,0 +1,40 @@
+
+* Tasks TODO
+
+A dynamic list of tasks that need to be done.  Old tasks will likely
+be pruned so this shouldn't serve as a definitive history.
+
+* TODO Initial Buttons with toast
+
+basic layout:
+
+counter restart
+tile
+good bad
+
+add toast
+
+* TODO Two modes
+
+invisible succeed/fail buttons
+pressing tile goes to phase two; makes s/f visible
+restart tile goes to phase one; makes s/f invisible
+
+* TODO Action
+
+restart and startup makes a list of tiles
+tiles displayed as text "d12" "w34"
+success removes tile from list and displays next
+failure moves tile to end of list and displays next
+
+* TODO Random
+
+Failed tiles are placed in the middle third.
+If remaining tiles is < N then tile is placed at the end
+
+* TODO Add art
+
+Perhaps convert to reasonable png with previous app.
+Load from resource dir
+
+* TODO Add nice succeed, fail, restart buttons
