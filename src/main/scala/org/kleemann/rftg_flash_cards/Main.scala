@@ -22,10 +22,17 @@ class Main extends SActivity  {
 
       this += new SVerticalLayout {
 
-        SButton(R.string.hello)
-	    .<<.wrap.Gravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL).>>
-            .onClick { toast(R.string.hello) }
+        this += new SLinearLayout {
+          STextView("12/55").wrap
+          SButton("Restart").wrap.onClick { toast("Restart") }
+        }
 
+        SButton("Tile").textSize(24.5 sp).onClick { toast("Tile") }
+
+        this += new SLinearLayout {
+          SButton("Success").wrap.onClick { toast("Success") }
+          SButton("Failure").wrap.onClick { toast("Failure") }
+        }
       }
 
     } padding 20.dip
