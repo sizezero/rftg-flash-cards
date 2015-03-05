@@ -20,8 +20,15 @@ import android.widget.{FrameLayout, Toast}
 
 class Main extends SActivity  {
 
+  var countTextView: STextView = null
+  var tileButton: SButton = null
   var successButton: SButton = null
   var failButton: SButton = null
+
+  val NUM_TILES = 55
+
+  // tiles starts as a simple list of integers
+  var tiles: List[Int] = null
 
   onCreate {
     contentView = new SFrameLayout {
@@ -29,25 +36,41 @@ class Main extends SActivity  {
       this += new SVerticalLayout {
 
         this += new SLinearLayout {
-          STextView("12/55").wrap
+          countTextView = new STextView("")
+          countTextView.wrap
+          this += countTextView
           SButton("Restart").wrap.onClick {
-            toast("Restart")
-            setTileSelected(false)
+            resetTiles()
           }
         }
 
-        SButton("Tile").textSize(24.5 sp).onClick {
-          toast("Tile")
+        tileButton = new SButton("Tile")
+        tileButton.textSize(24.5 sp).onClick {
           setTileSelected(true)
+          showDevelopment = !showDevelopment
+          displayTopTile()
         }
+        this += tileButton
 
         this += new SLinearLayout {
           successButton = new SButton("Success")
-          successButton.wrap.onClick { toast("Success") }
+          successButton.wrap.onClick {
+            tiles = tiles match {
+              case h :: t => t
+              case Nil => Nil
+            }
+            displayTopTile()
+          }
           this += successButton
 
           failButton = new SButton("Fail")
-          failButton.wrap.onClick { toast("Fail") }
+          failButton.wrap.onClick {
+            tiles = tiles match {
+              case h :: t => t ++ List(h)
+              case Nil => Nil
+            }
+            displayTopTile()
+          }
           this += failButton
 
         }
@@ -55,7 +78,27 @@ class Main extends SActivity  {
 
     } padding 20.dip
 
-    setTileSelected(false)
+    resetTiles()
+  }
+
+  var showDevelopment: Boolean = true
+
+  def resetTiles() {
+     tiles = (1 to NUM_TILES).toList
+     showDevelopment = true
+     displayTopTile()
+     setTileSelected(false)
+  }
+
+  // must be called after the top tile has changed
+  def displayTopTile() {
+    val text = tiles match {
+      case tile :: tail => (if (showDevelopment) "d" else "w") + f"$tile%02d"
+      case Nil => "Nil"
+    }
+    tileButton.setText(text)
+
+    countTextView.setText(tiles.size + "/" + NUM_TILES)
   }
 
   var isTileSelected: Boolean = false

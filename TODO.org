@@ -20,7 +20,7 @@ invisible succeed/fail buttons
 pressing tile goes to phase two; makes s/f enabled
 restart tile goes to phase one; makes s/f disabled
 
-* TODO Action
+* DONE Action
 
 restart and startup makes a list of tiles
 tiles displayed as text "d12" "w34"
