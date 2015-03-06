@@ -3,3 +3,5 @@ project/target/
 bin/
 project/bin/
 local.properties
+src/main/res/drawable/d*.png
+src/main/res/drawable/w*.png

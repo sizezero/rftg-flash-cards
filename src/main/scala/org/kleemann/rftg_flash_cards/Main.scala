@@ -21,7 +21,7 @@ import android.widget.{FrameLayout, Toast}
 class Main extends SActivity  {
 
   var countTextView: STextView = null
-  var tileButton: SButton = null
+  var tileButton: SImageButton = null
   var successButton: SButton = null
   var failButton: SButton = null
 
@@ -42,16 +42,9 @@ class Main extends SActivity  {
           SButton("Restart").wrap.onClick {
             resetTiles()
           }
-        }
+        }.wrap
 
-        tileButton = new SButton("Tile")
-        tileButton.textSize(24.5 sp).onClick {
-          setTileSelected(true)
-          showDevelopment = !showDevelopment
-          displayTopTile()
-        }
-        this += tileButton
-
+        // TODO if this is last in the vertical layout then it is not visible
         this += new SLinearLayout {
           successButton = new SButton("Success")
           successButton.wrap.onClick {
@@ -60,6 +53,7 @@ class Main extends SActivity  {
               case Nil => Nil
             }
             displayTopTile()
+            setTileSelected(false)
           }
           this += successButton
 
@@ -69,11 +63,21 @@ class Main extends SActivity  {
               case h :: t => t ++ List(h)
               case Nil => Nil
             }
-            displayTopTile()
-          }
+            displayTopTile() 
+            setTileSelected(false)
+         }
           this += failButton
 
+        }.wrap
+
+        tileButton = new SImageButton()
+        tileButton.scaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE).wrap.onClick {
+          setTileSelected(true)
+          showDevelopment = !showDevelopment
+          displayTopTile()
         }
+        this += tileButton
+
       }
 
     } padding 20.dip
@@ -92,11 +96,11 @@ class Main extends SActivity  {
 
   // must be called after the top tile has changed
   def displayTopTile() {
-    val text = tiles match {
-      case tile :: tail => (if (showDevelopment) "d" else "w") + f"$tile%02d"
-      case Nil => "Nil"
+    val resourceId = tiles match {
+      case tile :: tail => (if (showDevelopment) R.drawable.d01 else R.drawable.w01) + tile-1
+      case Nil => R.drawable.cross
     }
-    tileButton.setText(text)
+    tileButton.setImageResource(resourceId)
 
     countTextView.setText(tiles.size + "/" + NUM_TILES)
   }

@@ -27,14 +27,17 @@ tiles displayed as text "d12" "w34"
 success removes tile from list and displays next
 failure moves tile to end of list and displays next
 
-* TODO Random
-
-Failed tiles are placed in the middle third.
-If remaining tiles is < N then tile is placed at the end
-
-* TODO Add art
+* DONE Add art
 
 Perhaps convert to reasonable png with previous app.
 Load from resource dir
 
+* TODO Random
+
+Randomize initial tiles
+
+Failed tiles are placed in the middle third.
+If remaining tiles is < N then tile is placed at the end
+
 * TODO Add nice succeed, fail, restart buttons
+
