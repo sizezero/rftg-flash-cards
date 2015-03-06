@@ -32,7 +32,7 @@ class Main extends SActivity  {
   val NUM_TILES = 55
 
   // tiles starts as a simple list of integers
-  var tiles: List[Int] = null
+  var tiles: List[(Char, Int)] = null
 
   onCreate {
     contentView = new SFrameLayout {
@@ -56,8 +56,7 @@ class Main extends SActivity  {
               case h :: t => t
               case Nil => Nil
             }
-            displayTopTile()
-            setTileSelected(false)
+            newTile()
           }
           this += successButton
 
@@ -67,8 +66,7 @@ class Main extends SActivity  {
               case h :: t => t ++ List(h)
               case Nil => Nil
             }
-            displayTopTile() 
-            setTileSelected(false)
+            newTile() 
          }
           this += failButton
 
@@ -92,7 +90,7 @@ class Main extends SActivity  {
   var showDevelopment: Boolean = true
 
   def resetTiles() {
-     tiles = rnd.shuffle((1 to NUM_TILES).toList)
+     tiles = rnd.shuffle((1 to NUM_TILES).toList.flatMap{ id => List(('d',id), ('w',id)) } )
      showDevelopment = true
      displayTopTile()
      setTileSelected(false)
@@ -101,12 +99,22 @@ class Main extends SActivity  {
   // must be called after the top tile has changed
   def displayTopTile() {
     val resourceId = tiles match {
-      case tile :: tail => (if (showDevelopment) R.drawable.d01 else R.drawable.w01) + tile-1
+      case (tp, id) :: tail => (if (showDevelopment) R.drawable.d01 else R.drawable.w01) + id-1
       case Nil => R.drawable.cross
     }
     tileButton.setImageResource(resourceId)
 
-    countTextView.setText(tiles.size + "/" + NUM_TILES)
+    countTextView.setText(tiles.size + "/" + (NUM_TILES*2))
+  }
+
+  def newTile() {
+    val tp = tiles match {
+      case (tp, id) :: tail => tp
+      case Nil => 'd'
+    }
+    showDevelopment = (tp == 'd')
+    displayTopTile()
+    setTileSelected(false)
   }
 
   var isTileSelected: Boolean = false
