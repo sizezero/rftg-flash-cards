@@ -18,12 +18,16 @@ import android.util.Log
 import android.view.{View, ViewGroup, Menu, MenuItem, Gravity}
 import android.widget.{FrameLayout, Toast}
 
+import scala.util.Random
+
 class Main extends SActivity  {
 
   var countTextView: STextView = null
   var tileButton: SImageButton = null
   var successButton: SButton = null
   var failButton: SButton = null
+
+  var rnd: Random = new Random()
 
   val NUM_TILES = 55
 
@@ -88,7 +92,7 @@ class Main extends SActivity  {
   var showDevelopment: Boolean = true
 
   def resetTiles() {
-     tiles = (1 to NUM_TILES).toList
+     tiles = rnd.shuffle((1 to NUM_TILES).toList)
      showDevelopment = true
      displayTopTile()
      setTileSelected(false)
