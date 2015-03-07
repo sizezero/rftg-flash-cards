@@ -48,6 +48,15 @@ class Main extends SActivity  {
           }
         }.wrap
 
+        tileButton = new SImageButton()
+        tileButton.scaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE).wrap.onClick {
+          setTileSelected(true)
+          showDevelopment = !showDevelopment
+          displayTopTile()
+        }
+        this += tileButton
+        tileButton.<<.Weight(1.0f).>> // not sure why this helps
+
         // TODO if this is last in the vertical layout then it is not visible
         this += new SLinearLayout {
           successButton = new SButton("Success")
@@ -67,18 +76,10 @@ class Main extends SActivity  {
               case Nil => Nil
             }
             newTile() 
-         }
+          }
           this += failButton
 
         }.wrap
-
-        tileButton = new SImageButton()
-        tileButton.scaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE).wrap.onClick {
-          setTileSelected(true)
-          showDevelopment = !showDevelopment
-          displayTopTile()
-        }
-        this += tileButton
 
       }
 
